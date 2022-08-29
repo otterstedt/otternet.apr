@@ -1,10 +1,9 @@
 ---
 - name: Home assistant deployer
-  hosts: localhost
+  hosts: hass
 
 
   tasks:
-
   - name: Tell what I do
     debug:
       msg: "I am the hass deploy playbook"
