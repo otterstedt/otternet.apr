@@ -2,7 +2,7 @@
 
 - name: Copy restart configuration files
   copy:
-    src: /tmp/hass-deployment/config/{{ zone_id }}/{{ item }}
+    src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/{{ inventory_hostname }}/{{ item }}"
     dest: /home/{{ ansible_user }}/homeass/config/
     remote_src: yes
     backup: yes
@@ -12,34 +12,25 @@
 
 - name: Copy reload configuration files 
   copy:
-    src: /tmp/hass-deployment/config/{{ zone_id }}/{{ item }}
+    src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/{{ inventory_hostname }}/{{ item }}"
     dest: /home/{{ ansible_user }}/homeass/config/
     remote_src: yes
     backup: yes
   with_items:
+    - automations
     - automations.yaml
     - groups.yaml
+    - scripts.yaml
   notify: Reload Hass
 
 - name: Copy Common Files
   copy:
-    src: /tmp/hass-deployment/config/common/{{ item.src }}
+    src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/all/{{ item.src }}"
     dest: /home/{{ ansible_user }}/homeass/config/{{ item.dest }}
     remote_src: yes
     backup: yes
-  with_items:
-    - src: secrets.vault
-      dest: secrets.vault
-  notify: Restart Hass
-
-#copy does not decrypt remote copy vault files...
-- name: Create Ansible Vault Password File
-  copy:
-    content: "{{ ansible.vault.password }}"
-    dest: /home/{{ ansible_user }}/vault-pw
-
-- name: Decrypt Home Assistant secrets file(s)
-  shell: ansible-vault decrypt /home/{{ ansible_user }}/homeass/config/{{ item.src }} --vault-password-file=/home/{{ ansible_user }}/vault-pw --output=/home/{{ ansible_user }}/homeass/config/{{ item.dest }}
+    decrypt: yes
   with_items:
     - src: secrets.vault
       dest: secrets.yaml
+  notify: Restart Hass

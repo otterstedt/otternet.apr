@@ -1,2 +1,33 @@
 ---
 # handlers file for otn.hass.ar
+
+- name: Restart Hass
+  listen: Restart Hass
+  become: yes
+  service:
+    name: hass
+    state: restarted
+
+- name: Wait for successful restart
+  listen: Restart Hass
+  wait_for:
+    port: 8123
+    delay: 10
+
+- name: Reload Groups
+  listen: Reload Hass
+  uri:
+    url: http://localhost:8123/api/services/group/reload
+    method: POST
+    headers:
+      x-ha-access: "{{ hass.api.key }}"
+      Content-Type: application/json
+
+- name: Reload Automations
+  listen: Reload Hass
+  uri:
+    url: http://localhost:8123/api/services/automation/reload
+    method: POST
+    headers:
+      x-ha-access: "{{ hass.api.key }}"
+      Content-Type: application/json
