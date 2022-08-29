@@ -7,3 +7,6 @@
   - name: Tell what I do
     debug:
       msg: "I am the hass deploy playbook"
+
+  roles:
+  - otn.hass.ar

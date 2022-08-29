@@ -1,0 +1,7 @@
+---
+# defaults file for otn.hass.ar
+
+hass_ar_otternet_conf_repo:
+  url: https://github.com/otterstedt/otternet.conf.git
+  branch: master
+  local_folder: otternet_conf
