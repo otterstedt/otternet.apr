@@ -4,5 +4,5 @@
 - name: Checkout Otternet Config Repo
   git:
     repo: "{{ hass_ar_otternet_conf_repo.url }}"
-    dest: "{{ hass_ar_otternet_conf_repo.branch.local_folder }}"
+    dest: "{{ hass_ar_otternet_conf_repo.local_folder }}"
     version: "{{ hass_ar_otternet_conf_repo.branch }}"
