@@ -4,7 +4,6 @@
   ansible.builtin.copy:
     src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/{{ inventory_hostname }}/{{ item }}"
     dest: /home/{{ ansible_user }}/homeass/config/
-    remote_src: yes
     backup: yes
   with_items:
     - configuration.yaml
@@ -14,7 +13,6 @@
   ansible.builtin.copy:
     src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/{{ inventory_hostname }}/{{ item }}"
     dest: /home/{{ ansible_user }}/homeass/config/
-    remote_src: yes
     backup: yes
   with_items:
     - automations
@@ -27,7 +25,6 @@
   ansible.builtin.copy:
     src: "{{ hass_ar_otternet_conf_repo.local_folder }}/hass/all/{{ item.src }}"
     dest: /home/{{ ansible_user }}/homeass/config/{{ item.dest }}
-    remote_src: yes
     backup: yes
     decrypt: yes
   with_items:
