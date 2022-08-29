@@ -7,7 +7,13 @@
     dest: "{{ hass_ar_otternet_conf_repo.local_folder }}"
     version: "{{ hass_ar_otternet_conf_repo.branch }}"
   delegate_to: localhost
+  when: not hass_ar_otternet_conf_repo.local_folder is exists
 
 - include_tasks: configure.yml
   tags:
     - configure
+
+- name: Ensure git repo is removed
+  ansible.builtin.file:
+    path: "{{ hass_ar_otternet_conf_repo.local_folder }}"
+    state: absent

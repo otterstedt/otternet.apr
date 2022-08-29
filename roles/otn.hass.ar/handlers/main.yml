@@ -14,20 +14,18 @@
     port: 8123
     delay: 10
 
-- name: Reload Groups
+    
+- name: Reload Components
   listen: Reload Hass
   uri:
-    url: http://localhost:8123/api/services/group/reload
+    url: http://localhost:8123/api/services/{{ item }}/reload
     method: POST
     headers:
-      x-ha-access: "{{ hass.api.key }}"
+      Authorization: Bearer {{ hass.api.key }}
       Content-Type: application/json
+  with_items:
+    - group
+    - script
+    - automation
 
-- name: Reload Automations
-  listen: Reload Hass
-  uri:
-    url: http://localhost:8123/api/services/automation/reload
-    method: POST
-    headers:
-      x-ha-access: "{{ hass.api.key }}"
-      Content-Type: application/json
+

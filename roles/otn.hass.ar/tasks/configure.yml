@@ -28,6 +28,6 @@
     backup: yes
     decrypt: yes
   with_items:
-    - src: secrets.vault
+    - src: secrets.yaml
       dest: secrets.yaml
   notify: Restart Hass
