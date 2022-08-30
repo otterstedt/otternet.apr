@@ -9,6 +9,10 @@
   delegate_to: localhost
   when: not hass_ar_otternet_conf_repo.local_folder is exists
 
+- include_tasks: install.yml
+  tags:
+    - install
+
 - include_tasks: configure.yml
   tags:
     - configure
