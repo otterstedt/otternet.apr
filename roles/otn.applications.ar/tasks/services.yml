@@ -21,9 +21,6 @@
   become: yes
   when: (applications_ar_otternet_conf_repo.local_folder + '/systemd/' + inventory_hostname + '/' + item) is exists
 
-- debug:
-    msg: "{{ services_list }}"
-
 - name: Restart affected service(s)
   ansible.builtin.systemd:
     name: "{{ item.item }}"
