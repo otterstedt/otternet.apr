@@ -8,6 +8,7 @@
     version: "{{ hass_ar_otternet_conf_repo.branch }}"
   delegate_to: localhost
   run_once: yes
+  register: git_config_repo
   when: not hass_ar_otternet_conf_repo.local_folder is exists
   tags:
     - always
@@ -26,5 +27,6 @@
     state: absent
   delegate_to: localhost
   run_once: yes
+  when: git_config_repo.changed
   tags:
     - always
