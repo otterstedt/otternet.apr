@@ -1,0 +1,29 @@
+---
+# tasks file for otn.system.ar
+
+- name: Checkout Otternet Config Repo
+  git:
+    repo: "{{ system_ar_otternet_conf_repo.url }}"
+    dest: "{{ system_ar_otternet_conf_repo.local_folder }}"
+    version: "{{ system_ar_otternet_conf_repo.branch }}"
+  delegate_to: localhost
+  run_once: yes
+  when: not system_ar_otternet_conf_repo.local_folder is exists
+  tags:
+    - always
+
+- import_tasks: user.yml
+  tags:
+    - user
+
+- debug:
+    msg: "{{ system_ar_otternet_conf_repo.local_folder }}"
+
+- name: Ensure git repo is removed
+  ansible.builtin.file:
+    path: "{{ system_ar_otternet_conf_repo.local_folder }}"
+    state: absent
+  delegate_to: localhost
+  run_once: yes
+  tags:
+    - always

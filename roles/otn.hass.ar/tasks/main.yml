@@ -7,6 +7,7 @@
     dest: "{{ hass_ar_otternet_conf_repo.local_folder }}"
     version: "{{ hass_ar_otternet_conf_repo.branch }}"
   delegate_to: localhost
+  run_once: yes
   when: not hass_ar_otternet_conf_repo.local_folder is exists
   tags:
     - always
@@ -23,5 +24,7 @@
   ansible.builtin.file:
     path: "{{ hass_ar_otternet_conf_repo.local_folder }}"
     state: absent
+  delegate_to: localhost
+  run_once: yes
   tags:
     - always

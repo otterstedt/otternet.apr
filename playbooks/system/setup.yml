@@ -1,0 +1,5 @@
+---
+- name: System setup playbook
+  hosts: linux
+  roles:
+  - otn.system.ar
