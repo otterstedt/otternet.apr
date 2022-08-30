@@ -1,7 +1,7 @@
 ---
 
 - name: Add Home Assistant systemd service file
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ hass_ar_otternet_conf_repo.local_folder }}/systemd/{{ inventory_hostname }}/{{ item }}"
     dest: /etc/systemd/system/{{ item }}
     backup: yes
