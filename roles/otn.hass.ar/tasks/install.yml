@@ -15,6 +15,5 @@
     name: otn.hass.service
     enabled: yes
     state: reloaded
-  notify: Restart Hass
   become: yes
   
