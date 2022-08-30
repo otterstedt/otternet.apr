@@ -24,19 +24,11 @@
 - debug:
     msg: "{{ services_list }}"
 
-- name: Reload service(s)
-  ansible.builtin.service:
-    name: "{{ item.item }}"
-    enabled: yes
-    state: reloaded
-  become: yes
-  when: item.changed
-  with_items: "{{ services_list.results }}"
-
 - name: Restart affected service(s)
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: "{{ item.item }}"
     state: restarted
+    daemon_reload: yes
   become: yes
   when: item.changed
   with_items: "{{ services_list.results }}"
