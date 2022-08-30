@@ -8,6 +8,7 @@
   with_items:
     - otn.hass.service
   notify: Restart Hass
+  become: yes
 
 - name: Reload service(s)
   ansible.builtin.service:
@@ -15,4 +16,5 @@
     enabled: yes
     state: reloaded
   notify: Restart Hass
+  become: yes
   
