@@ -1,0 +1,28 @@
+---
+# tasks file for otn.applications.ar
+
+- name: Checkout Otternet Config Repo
+  git:
+    repo: "{{ applications_ar_otternet_conf_repo.url }}"
+    dest: "{{ applications_ar_otternet_conf_repo.local_folder }}"
+    version: "{{ applications_ar_otternet_conf_repo.branch }}"
+  delegate_to: localhost
+  run_once: yes
+  register: git_config_repo
+  when: not applications_ar_otternet_conf_repo.local_folder is exists
+  tags:
+    - always
+
+- import_tasks: services.yml
+  tags:
+    - services
+
+- name: Ensure git repo is removed
+  ansible.builtin.file:
+    path: "{{ applications_ar_otternet_conf_repo.local_folder }}"
+    state: absent
+  delegate_to: localhost
+  run_once: yes
+  when: git_config_repo.changed
+  tags:
+    - always

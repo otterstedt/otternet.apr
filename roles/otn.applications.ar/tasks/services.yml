@@ -1,0 +1,42 @@
+---
+
+- name: Add systemd service files
+  ansible.builtin.copy:
+    src: "{{ applications_ar_otternet_conf_repo.local_folder }}/systemd/{{ inventory_hostname }}/{{ item }}"
+    dest: /etc/systemd/system/{{ item }}
+    backup: yes
+  register: services_list
+  with_items:
+    - otn.ghost.service
+    - otn.grafana.service
+    - otn.influxdb.service
+    - otn.jitsi.service
+    - otn.emujs.service
+    - otn.concourse.service
+    - otn.ict-tunnels.service
+    - otn.librenms.service
+    - otn.lms.service
+    - otn.plex.service
+    - otn.rtmp.service
+  become: yes
+  when: (applications_ar_otternet_conf_repo.local_folder + '/systemd/' + inventory_hostname + '/' + item) is exists
+
+- debug:
+    msg: "{{ services_list }}"
+
+- name: Reload service(s)
+  ansible.builtin.service:
+    name: "{{ item.item }}"
+    enabled: yes
+    state: reloaded
+  become: yes
+  when: item.changed
+  with_items: "{{ services_list.results }}"
+
+- name: Restart affected service(s)
+  ansible.builtin.service:
+    name: "{{ item.item }}"
+    state: restarted
+  become: yes
+  when: item.changed
+  with_items: "{{ services_list.results }}"

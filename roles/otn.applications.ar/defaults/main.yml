@@ -1,0 +1,7 @@
+---
+# defaults file for otn.applications.ar
+
+applications_ar_otternet_conf_repo:
+  url: "{{ otternet_conf_repo.url | default('https://github.com/otterstedt/otternet.conf.git') }}"
+  branch: "{{ otternet_conf_repo.branch | default('master') }}"
+  local_folder: "{{ otternet_conf_repo.local_folder | default('/tmp/otternet_conf') }}"
