@@ -18,6 +18,7 @@
     - otn.lms.service
     - otn.plex.service
     - otn.rtmp.service
+    - otn.sapcc.service
   become: yes
   when: (applications_ar_otternet_conf_repo.local_folder + '/systemd/' + inventory_hostname + '/' + item) is exists
 
