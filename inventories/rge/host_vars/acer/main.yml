@@ -1,1 +1,2 @@
 ansible_host: 192.168.50.10
+ansible_user: "{{ vault_ansible_user }}"
