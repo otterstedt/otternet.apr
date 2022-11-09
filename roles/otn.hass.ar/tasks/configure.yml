@@ -20,6 +20,7 @@
     - automations.yaml
     - groups.yaml
     - scripts.yaml
+    - lights.yaml
   notify: Reload Hass
   when: (hass_ar_otternet_conf_repo.local_folder + '/hass/' + inventory_hostname + '/' + item) is exists
 
