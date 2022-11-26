@@ -8,6 +8,10 @@
   with_items:
     - configuration.yaml
     - sensor
+    - notify
+    - binary_sensor
+    - camera
+    - zone
   notify: Restart Hass
   when: (hass_ar_otternet_conf_repo.local_folder + '/hass/' + inventory_hostname + '/' + item) is exists
 
