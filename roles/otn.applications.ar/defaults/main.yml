@@ -5,3 +5,11 @@ applications_ar_otternet_conf_repo:
   url: "{{ otternet_conf_repo.url | default('https://github.com/otterstedt/otternet.conf.git') }}"
   branch: "{{ otternet_conf_repo.branch | default('master') }}"
   local_folder: "{{ otternet_conf_repo.local_folder | default('/tmp/otternet_conf') }}"
+
+
+applications_ar_systemd_services: "{{ config_systemd_services | default([]) }}"
+
+applications_ar_nodeexporter_version: "{{ version_nodeexporter | default('1.4.0.linux-amd64') }}"
+applications_ar_nodeexporter_arch: "{{ arch_nodeexporter | default('linux-amd64') }}"
+
+applications_ar_nodeexporter_install_path: /home/{{ ansible_user }}/node_exporter/node_exporter-{{ version_nodeexporter }}.{{ arch_nodeexporter }}

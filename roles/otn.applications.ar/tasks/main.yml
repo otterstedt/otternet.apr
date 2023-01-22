@@ -13,6 +13,20 @@
   tags:
     - always
 
+- name: Include configured vars from conf repo
+  ansible.builtin.include_vars:
+    dir: "{{ applications_ar_otternet_conf_repo.local_folder }}/{{ item }}"
+    depth: 1
+  when: (applications_ar_otternet_conf_repo.local_folder + '/' + item) is exists
+  with_items: 
+    - vars
+    - vars/{{ applications_ar_site_id }}/
+    - vars/{{ applications_ar_site_id }}/{{ inventory_hostname }}
+
+- import_tasks: service_files.yml
+  tags:
+    - services
+
 - import_tasks: services.yml
   tags:
     - services

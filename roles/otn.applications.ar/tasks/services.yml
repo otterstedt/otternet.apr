@@ -19,14 +19,27 @@
     - otn.plex.service
     - otn.rtmp.service
     - otn.sapcc.service
+    - otn.prometheus.service
+    - otn.alertmanager.service
   become: yes
   when: (applications_ar_otternet_conf_repo.local_folder + '/systemd/' + inventory_hostname + '/' + item) is exists
+
+- name: Add systemd service files from templates
+  ansible.builtin.template:
+    src: "{{ applications_ar_otternet_conf_repo.local_folder }}/systemd/templates/{{ item }}"
+    dest: /etc/systemd/system/{{ item }}
+    backup: yes
+  register: template_services_list
+  with_items: "{{ config_systemd_services }}"
+  become: yes
+  when: (applications_ar_otternet_conf_repo.local_folder + '/systemd/templates/' + item) is exists
 
 - name: Restart affected service(s)
   ansible.builtin.systemd:
     name: "{{ item.item }}"
     state: restarted
     daemon_reload: yes
+    enabled: yes
   become: yes
   when: item.changed
-  with_items: "{{ services_list.results }}"
+  with_items: "{{ services_list.results + template_services_list.results }}"

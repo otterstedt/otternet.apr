@@ -1,0 +1,14 @@
+
+
+- name: Create node exporter folder
+  ansible.builtin.file:
+    path: /home/{{ ansible_user }}/node_exporter/node_exporter-{{ version_nodeexporter }}.{{ arch_nodeexporter }}/
+    state: directory
+  when: '"otn.nodeexporter.service" in config_systemd_services'
+
+- name: Unarchive the node exporter file
+  ansible.builtin.unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v{{ version_nodeexporter }}/node_exporter-{{ version_nodeexporter }}.{{ arch_nodeexporter }}.tar.gz
+    dest: /home/{{ ansible_user }}/node_exporter/
+    remote_src: yes
+  when: '"otn.nodeexporter.service" in config_systemd_services'

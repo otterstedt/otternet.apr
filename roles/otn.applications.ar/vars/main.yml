@@ -1,2 +1,7 @@
 ---
 # vars file for otn.applications.ar
+
+config_systemd_services: "{{ (global_systemd_services | default([])) + (site_specific_systemd_services | default([])) + (host_specific_systemd_services | default([])) }}"
+
+
+applications_ar_site_id: "{{ otternet_site_id | mandatory }}"
