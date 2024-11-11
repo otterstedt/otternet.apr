@@ -1,0 +1,5 @@
+ansible_host: 10.0.1.190
+
+hass:
+  api:
+    key: "{{ vault_hass_api_key }}"
