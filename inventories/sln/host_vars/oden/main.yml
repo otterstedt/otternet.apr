@@ -1,3 +1,4 @@
+otternet_site_id: sln
 ansible_host: 10.0.1.190
 
 hass:
